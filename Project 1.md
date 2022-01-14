@@ -1,4 +1,4 @@
-Basics with COVID data
+Sergio Mora ST 558 Project 1
 ================
 Sergio Mora
 10/2/2021

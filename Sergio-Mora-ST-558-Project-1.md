@@ -1,26 +1,23 @@
-Basics with COVID data
+Sergio Mora ST 558 Project 1
 ================
 Sergio Mora
 10/2/2021
 
-  - [1 Required Packages for this
+  - [Required Packages for this
     Vingette](#required-packages-for-this-vingette)
-  - [2 Creating New Functions / Data
+  - [Creating New Functions / Data
     Manipulation](#creating-new-functions--data-manipulation)
-  - [3 Contingency Table](#contingency-table)
-  - [4 Creating New Data Sets](#creating-new-data-sets)
-  - [5 Numerical Summaries / Plots](#numerical-summaries--plots)
+  - [Contingency Table](#contingency-table)
+  - [Creating New Data Sets](#creating-new-data-sets)
+  - [Numerical Summaries / Plots](#numerical-summaries--plots)
 
 Now as we are over a year and a half into lockdown and COVID we will
 take a look at some of the stats available to us. None of them are good
 so let’s start of with some humor.
 
-![Funny Covid](./Funny%20Covid%20stats.jpg)
+![](%22C:/Users/14154/Documents/School/NCSU/STAT%20558/R%20project%201/ST558-Project-1-/Funny%20Covid%20states.jpg%22)
 
-Great now that we all had a good laugh let’s take a look at some pretty
-depressing stats.
-
-# 1 Required Packages for this Vingette
+# Required Packages for this Vingette
 
   - The `lubridate` for date manipulation
   - The `jsonlite` to pull date from API’s
@@ -42,7 +39,7 @@ library(knitr)
 library(reshape2)
 ```
 
-# 2 Creating New Functions / Data Manipulation
+# Creating New Functions / Data Manipulation
 
 We are creating two functions:
 
@@ -54,11 +51,6 @@ We are creating two functions:
     `referrence_table_lookup()` and cleans it up to how we want to see
     the data for our plots down below. We also create a few new
     variables which we will use for out Exploratory Data Analysis (EDA).
-    With this function the user can choose the country they want to see,
-    the date range with a minimum data and a maximum date, and a minimum
-    of new deaths. This allows for new the user to easily manipulate the
-    data that they see. We are also allowing for further criteria to our
-    function to be passed through.
 
 <!-- end list -->
 
@@ -94,7 +86,7 @@ referrence_table_clean <- function(x,type,date1 = "2021-01-01",date2 = "3000-01-
 }
 ```
 
-# 3 Contingency Table
+# Contingency Table
 
 We want to see how many individual countries we have per continent. Due
 to vast difference in population this doesn’t tell us a huge amount with
@@ -114,7 +106,7 @@ kable(col.names = c("Continent", "Frequency"))
 | Europe    |        50 |
 | Oceania   |        25 |
 
-# 4 Creating New Data Sets
+# Creating New Data Sets
 
 Now that we have created two functions that will allow us to pull data
 directly from the API for any country available we will now create a few
@@ -129,7 +121,7 @@ that in our functions above.
 Full_data <- bind_rows(referrence_table_clean("US","ISO2"),referrence_table_clean("venezuela","Slug"),referrence_table_clean("France","Country"),referrence_table_clean("Colombia","Country"))
 ```
 
-# 5 Numerical Summaries / Plots
+# Numerical Summaries / Plots
 
 Because I don’t understand what negative new deaths means I will remove
 them for this analysis.
@@ -143,7 +135,7 @@ g + geom_point(aes(x = New_Confirmed, y = New_Deaths, color = Country)) +
   ylab("New Deaths") + xlab("New Confirmed")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](Sergio-Mora-ST-558-Project-1_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 g + geom_boxplot(aes(x = Country, y = New_Deaths, color = Country)) + 
@@ -153,7 +145,7 @@ g + geom_boxplot(aes(x = Country, y = New_Deaths, color = Country)) +
   xlab("")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+![](Sergio-Mora-ST-558-Project-1_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
 
 ``` r
 g + geom_histogram(aes(x = New_Deaths, group = Country, color = Country, y = ..density..), position = "dodge") + 
@@ -161,7 +153,7 @@ g + geom_histogram(aes(x = New_Deaths, group = Country, color = Country, y = ..d
   labs(title = "Density histogram of New Deaths with a distribution line overlayed", caption = "Clearly Right skewed moth days days we had 'low' number of new deaths") + xlab("New Confirmed")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
+![](Sergio-Mora-ST-558-Project-1_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->
 
 ``` r
 g + geom_line(aes(x = Date,y = New_Deaths, group = Country, color = Country)) + 
@@ -169,7 +161,7 @@ g + geom_line(aes(x = Date,y = New_Deaths, group = Country, color = Country)) +
   ylab("Newly Confirmed Deaths")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->
+![](Sergio-Mora-ST-558-Project-1_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->
 
 ``` r
 Summary_data <- Full_data %>% 
@@ -185,4 +177,4 @@ q + geom_bar(stat = "identity", position = "dodge") +
   xlab("")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-6-5.png)<!-- -->
+![](Sergio-Mora-ST-558-Project-1_files/figure-gfm/unnamed-chunk-6-5.png)<!-- -->
